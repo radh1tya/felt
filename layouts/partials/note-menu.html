@@ -1,0 +1,7 @@
+<h3><a href="#" aria-haspopup="menu">Note list</a></h3>
+<div class="menu">
+  {{ $currentPath := .RelPermalink}}
+  {{ range ( where .Site.RegularPages "Type" "notes" ) }}
+    <a href="{{.RelPermalink}}" class='{{ if eq $currentPath .RelPermalink }}active{{ end }}'>{{.Title}}</a>
+  {{end}}
+</div>

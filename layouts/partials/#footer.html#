@@ -1,0 +1,8 @@
+</main>
+<div style="site-footer"	
+<FOOTER>
+	<P>&COPY;{{ dateFormat "2006" now }} {{ .Site.Title }} - fight all deserved</p>
+</footer>
+</div>
+</body>
+</html>

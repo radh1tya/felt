@@ -1,0 +1,16 @@
+<header class="site-header"><h3><a class="logo" style="font-size:100%"href="/">
+      {{ .Site.Title }}
+      </a></h3>
+      <div>
+      <nav class="site-nav"> 
+      <ul class="main-menu">
+      {{ range.Site.Menus.main }}
+      <li> 
+	      <a rel="nofollow" href="{{ .URL }}">{{ .Name }}</a></li>
+      {{ end }}
+    </ul>
+    </ul>
+      </div>
+    <div style="clear:both;"></div>
+</header>
+

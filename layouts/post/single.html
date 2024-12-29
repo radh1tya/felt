@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+<h1>{{ .Title }}</h1>
+<p><time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+		{{ .Date.Format "2 January 2006" }}
+</time> 
+· 
+{{ range .Params.penulis }}
+~{{ . }}
+{{ end }}
+·
+{{ range .Params.categories }}
+⮕<a href="/categories/{{ . | urlize}}">{{ . }}</a>
+{{ end }}
+·
+{{ range .Params.tags }}
+  #<a href="/tags/{{ . | urlize }}">{{ . }}</a>
+{{ end }}
+</p>
+{{ with .Params.thumb }}
+<img src="{{ . }}" loading="lazy">
+{{ else }}
+{{ end }}
+{{ if .Params.toc }} 
+<b><p>Table of Contents</p></b>
+      {{ .TableOfContents }}
+      {{ end }}
+{{ .Content | safeHTMLAttr }}
+<p style="font-size: 2rem;text-align:center;">⚘</p>
+<center>
+	<i><p>Questions or comments? Please feel free to <a href="/page/about" target="_blank">contact me</a>.</p></i>
+</center>
+	{{ partial "footer.html" . }}

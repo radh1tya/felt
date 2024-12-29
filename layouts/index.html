@@ -1,0 +1,30 @@
+{{ partial "header.html" . }}
+<div>
+ <div>
+    {{ $counter := 0 }}
+    {{ range where .Paginator.Pages "Section" "post" }}
+      {{ if lt $counter 10 }}
+        <article class="post-snippet">
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <p>
+            {{ with .Params.tags }}
+              {{ range $index, $tag := . }}
+                #<a href="/tags/{{ $tag | urlize }}">{{ $tag }}</a>{{ if not (eq (add $index 1) (len .)) }}, {{ end }}
+              {{ end }}
+            {{ end }}
+<time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                {{ .Date.Format "2 January 2006" }}
+</time> 
+          </p>
+	  <p>
+            {{ .Summary | default "No description available." | truncate 300 }}
+          </p>
+        </article>
+        {{ $counter = add $counter 1 }}
+      {{ end }}
+    {{ end }}
+  </div>
+</div>
+{{ template "partials/pagination.html" . }}
+
+{{ partial "footer.html" . }}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color:#000000;">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	{{ with .Params.Description }}
+    	<meta name="description" content="{{ . | safeHTMLAttr }}">
+    	{{ else }}
+   	{{ $summary := .Summary | default .Content | safeHTMLAttr | truncate 150 "..." }}
+    	<meta name="description" content="{{ $summary | safeHTMLAttr }}">
+    	
+	{{ end }}	
+    	
+	<meta property="image" content="{{ .Site.BaseURL }}{{ .Params.thumb}}">	
+	<meta name="keywords" content="{{ if .Params.Keywords }}{{ delimit .Params.Keywords ", " }}{{ end }}">
+    	
+	<!-- Facebook Meta Tags -->
+	<meta property="og:image" content="{{ .Site.BaseURL }}{{ .Params.thumb}}">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
+	<meta property="og:url" content="{{ .Site.BaseURL }}">
+
+	{{ with .Params.Description }}
+    	<meta property="og:description" content="{{ . | safeHTMLAttr }}">
+    	{{ else }}
+   	{{ $summary := .Summary | default .Content | safeHTMLAttr | truncate 150 "..." }}
+    	<meta property="og:description" content="{{ $summary | safeHTMLAttr }}">
+	{{ end }}
+
+	<!-- Twitter Meta Tags -->
+	  <meta name="twitter:card" content="summary_large_image">
+	  <meta property="twitter:domain" content="{{ .Site.BaseURL }}">
+	  <meta property="twitter:url" content="{{ .Site.BaseURL }}">
+	  <meta name="twitter:title" content="{{ .Title }} | {{ .Site.Title }}">
+  
+  {{ with .Params.Description }}
+    	<meta property="twitter:description" content="{{ . | safeHTMLAttr }}">
+    	{{ else }}
+   	{{ $summary := .Summary | default .Content | safeHTMLAttr | truncate 150 "..." }}
+    	<meta property="twitter:description" content="{{ $summary | safeHTMLAttr }}">
+	{{ end }}
+
+	<meta name="twitter:image" content="{{ .Site.BaseURL }}{{ .Params.thumb}}">
+
+	<title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+
+	<link rel="stylesheet" href="{{ .Site.BaseURL }}style.css" type="text/css" media="all" />
+	<link rel="icon" type="image/png"  href="/favicon.ico">
+	
+	{{ with .OutputFormats.Get "rss" -}}
+	{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+	{{ end -}}
+	
+</head>
+
+<body>
+
+{{ partial "nav.html" . }}
+
+<main class="content">

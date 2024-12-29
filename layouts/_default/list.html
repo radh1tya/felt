@@ -1,0 +1,12 @@
+{{ partial "header.html" . }}
+{{ .Content }}
+{{ range.Paginator.Pages }}
+<article class="post-snippet">
+<a href="{{ .RelPermalink }}">{{ .Title }}</a>  
+	<time style="float:right" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" >
+		{{ .Date.Format "January 2, 2006" }}
+	</time>
+</article> 
+{{ end }}  {{ template "partials/pagination.html" . }}
+
+{{ partial "footer.html" . }}

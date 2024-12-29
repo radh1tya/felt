@@ -1,0 +1,6 @@
+{{ partial "header.html" . }}
+<h1>{{ .Title }}</h1>
+s
+{{ .Content | markdownify | safeHTMLAttr }}
+
+{{ partial "footer.html" . }}

@@ -1,0 +1,67 @@
+<section>
+ <script src="https://unpkg.com/lunr/lunr.js"></script>
+  <script>
+    var index = lunr(function () {
+      this.field('title');
+      this.field('content');
+      this.ref('id');
+    });
+
+    {{ range where .Site.Pages "Type" "in" site.Params.mainSections }}
+      {{ if eq .Section "post" }}
+        index.add({
+          id: {{ .UniqueID }},
+          title: {{ .Title | jsonify }},
+          content: {{ .Plain | jsonify }},
+        });
+      {{ end }}
+    {{ end }}
+
+    function showSearchResults(results) {
+      var resultsContainer = document.getElementById('search-results');
+
+      // Pastikan elemen hasil sudah ada di DOM
+      if (!resultsContainer) {
+        console.error("Element with ID 'search-results' not found.");
+        return;
+      }
+
+      // Bersihkan hasil sebelumnya
+      resultsContainer.innerHTML = '';
+
+      // Tampilkan hasil pencarian
+      for (var i = 0; i < results.length; i++) {
+        var item = results[i];
+        var page = index.documentStore.getDoc(item.ref);
+
+        var resultItem = document.createElement('div');
+        resultItem.innerHTML = '<h3><a href="' + page.RelPermalink + '">' + page.title + '</a></h3>';
+        resultItem.innerHTML += '<p>' + page.content.substring(0, 150) + '...</p>';
+        
+        resultsContainer.appendChild(resultItem);
+      }
+    }
+
+    function search(query) {
+      var results = index.search(query);
+      showSearchResults(results);
+    }
+  </script>
+<div>
+<!--	<input type="text" id="search-input" placeholder="🔍 Type here to search" oninput="showSearchResults()">
+                <ul id="list"></ul> this list is for rendering the results -->
+	<form onsubmit="event.preventDefault(); search(this.query.value)">
+  <input id="search-input" type="text" name="query" placeholder="Cari..." />
+  <button type="submit">Cari</button>
+<form onsubmit="event.preventDefault(); search(this.query.value)">
+  <input type="text" name="query" placeholder="Cari..." />
+  <button type="submit">Cari</button>
+ <div id="search-results"></div>
+</form>
+</section>
+<!-- <script defer src="/js/search.js"></script>
+ <script defer src="/js/lunr.min.js"></script>
+ <script defer src="/js/main.js"></script>
+ --!>
+</div>
+ 

@@ -1,0 +1,17 @@
+<header class="site-header">
+      <h1><a class="logo" href="{{ .Site.BaseURL }}">
+      {{ .Site.Title }}
+      </a></h1>
+      <p>Viva la Indepe</p>
+  <nav class="site-nav">
+  
+    <ul class="main-menu">
+      {{ range.Site.Menus.main }}
+      <li>
+        <a href="{{ .URL }}">{{ .Name }}</a>
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
+  <div style="clear:both;"></div>
+</header>
